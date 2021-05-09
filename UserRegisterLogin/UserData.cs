@@ -6,48 +6,26 @@ using System.Threading.Tasks;
 
 namespace UserRegisterLogin
 {
-    public class UserData
+     class UserData
     {
-        public static int? GetAgeInYears(DateTime userBirthdayDate)
-        {
-            if (userBirthdayDate > DateTime.Now)
-                return null;
-            int years = DateTime.Now.Year - userBirthdayDate.Year;
+        public Dictionary<string, User> _userData;
 
-            if (DateTime.Now.Month < userBirthdayDate.Month ||
-               (DateTime.Now.Month == userBirthdayDate.Month &&
-                DateTime.Now.Day < userBirthdayDate.Day))
-            {
-                years--;
-            }
-            if (years >= 0)
-                return years;
-            else
-                return 0;
-        }
-        private static bool IsEmailValid(string userEmail)
+        public UserData()
         {
-            if (!userEmail.EndsWith(".com") || !userEmail.Contains("@"))
+            _userData = new Dictionary<string, User>();
+        }
+
+        public bool AddUser(string userName1, User user)
+        {
+            if (_userData.ContainsKey(userName1))
             {
+                Console.WriteLine("This name Already exists");
                 return false;
             }
 
+            _userData.Add(userName1, user);
+            Console.WriteLine("congratulations on joining");
             return true;
-        }
-
-        private static void AskToEnterEmail(string userEmail)
-        {
-            Console.WriteLine("Please enter your email: ");
-            userEmail = Console.ReadLine();
-
-            if (!IsEmailValid(userEmail))
-            {
-                Console.WriteLine("Incorect email");
-            }
-            else
-            {
-                Console.WriteLine("emmm???? .");
-            }
         }
     }
 }
